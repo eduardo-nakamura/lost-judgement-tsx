@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/lost-judgement-tsx/static/css/main.a100bb30.css",
+    "main.js": "/lost-judgement-tsx/static/js/main.1060ef80.js",
+    "static/js/787.8aa37fce.chunk.js": "/lost-judgement-tsx/static/js/787.8aa37fce.chunk.js",
+    "static/media/lostjdugment_logo_white.svg": "/lost-judgement-tsx/static/media/lostjdugment_logo_white.35cf41d1acb6bf9eacf1afda1c96f6e8.svg",
+    "static/media/robotics_640.webp": "/lost-judgement-tsx/static/media/robotics_640.a1e231e1be50d33a9a4f.webp",
+    "index.html": "/lost-judgement-tsx/index.html",
+    "main.a100bb30.css.map": "/lost-judgement-tsx/static/css/main.a100bb30.css.map",
+    "main.1060ef80.js.map": "/lost-judgement-tsx/static/js/main.1060ef80.js.map",
+    "787.8aa37fce.chunk.js.map": "/lost-judgement-tsx/static/js/787.8aa37fce.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a100bb30.css",
+    "static/js/main.1060ef80.js"
+  ]
+}
