@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a100bb30.css",
+    "main.js": "/static/js/main.c6a471e9.js",
+    "static/js/787.8aa37fce.chunk.js": "/static/js/787.8aa37fce.chunk.js",
+    "static/media/lostjdugment_logo_white.svg": "/static/media/lostjdugment_logo_white.35cf41d1acb6bf9eacf1afda1c96f6e8.svg",
+    "static/media/robotics_640.webp": "/static/media/robotics_640.a1e231e1be50d33a9a4f.webp",
+    "index.html": "/index.html",
+    "main.a100bb30.css.map": "/static/css/main.a100bb30.css.map",
+    "main.c6a471e9.js.map": "/static/js/main.c6a471e9.js.map",
+    "787.8aa37fce.chunk.js.map": "/static/js/787.8aa37fce.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a100bb30.css",
+    "static/js/main.c6a471e9.js"
+  ]
+}
