@@ -27,6 +27,13 @@
 .App-link {
   color: #61dafb;
 }
+.MuiAccordion-root,
+.MuiAccordionSummary-root {
+  background-color: #35dfdf !important;
+}
+.MuiAccordion-root.Mui-expanded	{
+  margin: 0 !important
+}
 
 @keyframes App-logo-spin {
   from {
