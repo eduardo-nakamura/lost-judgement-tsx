@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, List, ListItem, ListItemButton, Fab, Typography, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,Container } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Grid, List, ListItem, ListItemButton, Fab, Typography, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Container } from '@mui/material';
+
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { materialList, MaterialCheckList } from "../assets/mockup"
 import { BtnMat, BtnContainer } from "./styles"
 
@@ -16,11 +20,19 @@ export default function Material() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [checkList, setcheckList] = useState(initValue);
-  const [open, setOpen] = React.useState(false);
+  const [expanded, setExpanded] = useState("panel0");
 
   const tableHeaderStyle = { color: '#35dfdf', borderBottom: '1px solid #35dfdf', textAlign: 'center', padding: '10px 0' };
   const tableBodyStyle = { color: '#fff', textAlign: 'center' }
   const tableRowStyle = { borderLeft: '5px solid #35dfdf' };
+  const showText = { height: 'auto'};
+  const hideText = { 
+    height: '25.8px', 
+    overflowY: 'hidden',
+    "&:hover ": {
+      color: '#35dfdf'
+    },
+   };
 
   useEffect(() => {
     getCheckList()
@@ -49,8 +61,6 @@ export default function Material() {
         setcheckList(JSON.parse(todoLocal))
       }
 
-      // let todoLocal = JSON.parse(localStorage.getItem('checkList'))
-      // setcheckList(todoLocal)
     }
   }
 
@@ -59,13 +69,32 @@ export default function Material() {
     setShowSearch(true)
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  function getPrice(cost: any[], val: string, qty: number) {
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    let valType = "¥"
+    switch (val) {
+      case "Gambling Hall":
+        valType = "Tags"
+        break;
+      case "Onodera's Wares":
+        valType = "SP"
+        break;
+      case "Encounters":
+        valType = "-"
+        break;
+      case "Casino":
+        valType = "Chips"
+        break;
+      case "Shogi":
+        valType = "Shogi"
+        break;
+      default:
+        valType = "¥"
+        break;
+    }
+    let priceFiltered = cost.filter(price => price.type === valType);
+    return valType === "-" ? "" : `- ${priceFiltered[0].value * qty} ${priceFiltered[0].type}`
+  }
 
   function addMaterial(material: { id: number; name: string; cost: { value: number; type: string; }[]; location: string[]; }) {
     const checkUsername = (obj: { id: number; }) => obj.id === material.id;
@@ -79,6 +108,7 @@ export default function Material() {
         check: false
       }
       setcheckList(prevArray => [...prevArray, addMaterialRow])
+      setSearchTerm('');
     }
   }
 
@@ -124,16 +154,21 @@ export default function Material() {
   }
 
 
+
   return (
     <Box>
+      <Fab sx={{ position: 'absolute', bottom: '15px', right: '15px' }} size="small" aria-label="like">
+        <QuestionMarkIcon />
+      </Fab>
       <Typography sx={{ textAlign: 'center', color: '#fff', fontSize: '40px', padding: '20px 0' }}>
         Material Checklist
+
       </Typography>
       <Container>
         <Grid container spacing={1}>
 
-          <Grid item xs={12} md={showSearch ? 3 : 1}>
-            <Box sx={{ background: '#35dfdf', padding: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Grid item xs={showSearch ? 12 : 2} md={showSearch ? 3 : 1}>
+            <Box sx={{ background: '#35dfdf', padding: '10px', display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
 
               {showSearch && (
                 <TextField
@@ -147,6 +182,7 @@ export default function Material() {
               <Fab size="small" onClick={() => setShowSearch(!showSearch)} aria-label="like">
                 <ExpandMoreIcon style={{ transform: showSearch ? 'rotate(90deg)' : 'rotate(270deg)', fontSize: 40 }} />
               </Fab>
+
             </Box>
             {showSearch && (
               <Box style={{ color: '#fff', background: '#35dfdf' }}>
@@ -171,8 +207,8 @@ export default function Material() {
                   <TableRow sx={tableRowStyle}>
                     <TableCell sx={tableHeaderStyle} style={{ width: '10%' }}>Qty</TableCell>
                     <TableCell sx={tableHeaderStyle}>Name</TableCell>
-                    <TableCell sx={tableHeaderStyle}>Cost</TableCell>
-                    <TableCell sx={tableHeaderStyle}>Location</TableCell>
+                    {/* <TableCell sx={tableHeaderStyle}>Cost</TableCell> */}
+                    <TableCell sx={tableHeaderStyle}>Location / Cost</TableCell>
                     <TableCell sx={tableHeaderStyle} style={{ width: '15%' }}>Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -198,21 +234,28 @@ export default function Material() {
 
                       </TableCell>
                       <TableCell sx={tableBodyStyle} > {row.name} </TableCell>
-                      <TableCell sx={tableBodyStyle}>
+                
+                      <TableCell sx={tableBodyStyle} onClick={() => setExpanded(`panel${row.id}`)}>
+                  
 
-                        {row.cost.map((option, key) => (
-                          <Typography key={'cost-' + key}>
-                            {option.value ? option.value * row.qty : ''} {option.type !== '-' ? option.type : ''}
-                          </Typography>
-                        ))}
-                      </TableCell>
-                      <TableCell sx={tableBodyStyle}>
-
-                        {row.location.map((option) => (
-                          <Typography key={'session-' + option}>
-                            {option}
-                          </Typography>
-                        ))}
+                        {expanded === `panel${row.id}` ?
+                          <Box sx={showText}>
+                            {row.location.map((option) => (
+                              <div key={row.id + '-session-' + option} style={{display: 'flex', justifyContent: 'center'}}>
+                                {option} {getPrice(row.cost, option, row.qty)} <ExpandMoreIcon sx={{fontSize: '25px', marginLeft: '10px', opacity: 0}} />
+                              </div>
+                            ))}
+                          </Box>
+                          :
+                          <Box sx={hideText}>
+                            {row.location.map((option) => (
+                              <div key={row.id + '-session-' + option} style={{display: 'flex', justifyContent: 'center'}}>
+                                {option} {getPrice(row.cost, option, row.qty)} <ExpandMoreIcon sx={{fontSize: '25px', marginLeft: '10px', opacity: row.location.length > 1 ? 1 : 0}} />
+                              </div>
+                            ))}
+                          
+                          </Box>
+                        }
                       </TableCell>
 
                       <TableCell>

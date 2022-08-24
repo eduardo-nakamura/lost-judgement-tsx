@@ -36,10 +36,10 @@ export const invoices = [
 ]
 
 export const materialList = [
-    {id: 1, name: "Pocket Tissues", cost: [{value:50, type: "¥"}],location: ["Poppo", "Pharmacies", "Encounters"] },
+    {id: 1, name: "Pocket Tissues", cost: [{value:50, type: "¥"},{value:0, type: "-"}],location: ["Poppo", "Pharmacies", "Encounters"] },
     {id: 2, name: "Paper Plate", cost: [{value:0, type: "-"}],location: ["Encounters"] },
-    {id: 3, name: "Iron Plate", cost: [{value:100, type: "SP"}],location: ["Encounters", "Onodera's Wares"] },
-    {id: 4, name: "Bronze Plate", cost: [{value:10, type: "Tags"},{value:10, type: "Chips"},{value:1000, type: "SP"},{value:1000, type: "Shogi"}],location: ["Encounters", "Gambling Hall", "Casino", "Onodera's Wares", "Shogi"] },
+    {id: 3, name: "Iron Plate", cost: [{value:100, type: "SP"},{value:0, type: "-"}],location: ["Encounters", "Onodera's Wares"] },
+    {id: 4, name: "Bronze Plate", cost: [{value:0, type: "-"},{value:10, type: "Tags"},{value:10, type: "Chips"},{value:1000, type: "SP"},{value:1000, type: "Shogi"}],location: ["Encounters", "Gambling Hall", "Casino", "Onodera's Wares", "Shogi"] },
     {id: 5, name: "Silver Plate", cost: [{value:100, type: "Tags"},{value:100, type: "Chips"},{value:10000, type: "SP"},{value:10000, type: "Shogi"}],location: ["Gambling Hall", "Casino", "Onodera's Wares", "Shogi"] },
     {id: 6, name: "Gold Plate", cost: [{value:1000, type: "Tags"},{value:1000, type: "Chips"},{value:100000, type: "SP"},{value:100000, type: "Shogi"}],location: ["Lost Item Reward", "Gambling Hall", "Casino", "Onodera's Wares", "Shogi"] },
     {id: 7, name: "Platinum Plate", cost: [{value:2000, type: "Tags"},{value:2000, type: "Chips"},{value:200000, type: "SP"},{value:200000, type: "Shogi"}],location: ["Gambling Hall", "Casino", "Onodera's Wares", "Shogi"] },

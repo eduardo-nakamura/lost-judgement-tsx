@@ -1,7 +1,6 @@
 
-import { Container, Typography, Card, CardActions, CardContent, CardMedia, Button, Grid } from '@mui/material';
+import { Container, Typography, Card,  CardContent, CardMedia,  Grid } from '@mui/material';
 import { menuList } from "../assets/mockup"
-import robotics from "../assets/robotics_640.webp"
 import { NavLink } from "react-router-dom";
 
 export default function Home() {

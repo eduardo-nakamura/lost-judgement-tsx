@@ -6,8 +6,7 @@ import { menuList } from "./assets/mockup";
 import './App.css';
 
 function App() {
-  const navContainerStyle = { borderBottom: "solid 1px #fff",  display: 'flex', justifyContent: 'space-around', }
-  const navLinkStyle = { color: '#fff',textDecoration: 'none',padding: "1rem 0", margin:0,fontSize: '1rem', lineHeight: '2rem' }
+  const navContainerStyle = { borderBottom: "solid 1px #fff",  display: 'flex', justifyContent: 'space-around', }  
   
   return (
     <div>
