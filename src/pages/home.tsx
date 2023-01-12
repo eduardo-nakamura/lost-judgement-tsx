@@ -20,8 +20,8 @@ export default function Home() {
             route: "/material", 
             img: robotics },    
        */}
-        {menuList.map((row, index) => (
-          <Grid item xs={6} md={4} key={index}>
+        {menuList.map((row) => (
+          <Grid item xs={12} md={4} key={row.id}>
             <NavLink to={row.route} style={{textDecoration: 'none'}}>
               <Card sx={{ background: "#35dfdf" }}>
                 <CardMedia

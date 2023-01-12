@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Grid, List, ListItem, ListItemButton, Fab, Typography, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Container } from '@mui/material';
-
-
+import { Grid, List, ListItem, ListItemButton, Fab, Typography, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Container, Stack, Button, Snackbar } from '@mui/material';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { materialList, MaterialCheckList } from "../assets/mockup"
-import { BtnMat, BtnContainer } from "./styles"
+import { BtnMat, BtnContainer, BtnClear } from "./styles"
 
 const initValue: MaterialCheckList[] = []
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function Material() {
   const materialListInit = materialList
@@ -21,18 +26,21 @@ export default function Material() {
   const [showSearch, setShowSearch] = useState(false);
   const [checkList, setcheckList] = useState(initValue);
   const [expanded, setExpanded] = useState("panel0");
+  const [open, setOpen] = useState(false);
 
   const tableHeaderStyle = { color: '#35dfdf', borderBottom: '1px solid #35dfdf', textAlign: 'center', padding: '10px 0' };
+  const tableHeaderStyleLoc = { color: '#35dfdf', borderBottom: '1px solid #35dfdf', textAlign: 'center', padding: '10px 0', display: { xs: 'none', md: 'block' } };
   const tableBodyStyle = { color: '#fff', textAlign: 'center' }
+  const tableBodyStyleLoc = { color: '#fff', textAlign: 'center', display: { xs: 'none', md: 'block' } }
   const tableRowStyle = { borderLeft: '5px solid #35dfdf' };
-  const showText = { height: 'auto'};
-  const hideText = { 
-    height: '25.8px', 
+  const showText = { height: 'auto' };
+  const hideText = {
+    height: '25.8px',
     overflowY: 'hidden',
     "&:hover ": {
       color: '#35dfdf'
     },
-   };
+  };
 
   useEffect(() => {
     getCheckList()
@@ -80,9 +88,16 @@ export default function Material() {
         valType = "SP"
         break;
       case "Encounters":
+      case "Lost Item Reward":
+      case "Heaven's Golf":
+      case "Robotics Club Matches":
+      case "Rare Cat Reward":
+      case "Common Cat Reward":
+      case "Found on the ground":
         valType = "-"
         break;
       case "Casino":
+      case "Heaven's Door Casino":
         valType = "Chips"
         break;
       case "Shogi":
@@ -98,6 +113,7 @@ export default function Material() {
 
   function addMaterial(material: { id: number; name: string; cost: { value: number; type: string; }[]; location: string[]; }) {
     const checkUsername = (obj: { id: number; }) => obj.id === material.id;
+
     if (!checkList.some(checkUsername)) {
       let addMaterialRow: MaterialCheckList = {
         id: material.id,
@@ -109,6 +125,7 @@ export default function Material() {
       }
       setcheckList(prevArray => [...prevArray, addMaterialRow])
       setSearchTerm('');
+      setOpen(true);
     }
   }
 
@@ -153,13 +170,21 @@ export default function Material() {
     setcheckList(checkList.filter((el) => el.id !== id))
   }
 
+  const handleClick = () => {
+    setOpen(true);
+  };
 
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <Box>
-      <Fab sx={{ position: 'absolute', bottom: '15px', right: '15px' }} size="small" aria-label="like">
-        <QuestionMarkIcon />
-      </Fab>
+
       <Typography sx={{ textAlign: 'center', color: '#fff', fontSize: '40px', padding: '20px 0' }}>
         Material Checklist
 
@@ -187,6 +212,7 @@ export default function Material() {
             {showSearch && (
               <Box style={{ color: '#fff', background: '#35dfdf' }}>
                 <List>
+
                   {rows.slice(0, 20).map((row) => (
                     <ListItem disablePadding key={'search-list' + row.name}>
                       <ListItemButton component="a" onClick={() => addMaterial(row)}>
@@ -208,7 +234,7 @@ export default function Material() {
                     <TableCell sx={tableHeaderStyle} style={{ width: '10%' }}>Qty</TableCell>
                     <TableCell sx={tableHeaderStyle}>Name</TableCell>
                     {/* <TableCell sx={tableHeaderStyle}>Cost</TableCell> */}
-                    <TableCell sx={tableHeaderStyle}>Location / Cost</TableCell>
+                    <TableCell sx={tableHeaderStyleLoc}>Location / Cost</TableCell>
                     <TableCell sx={tableHeaderStyle} style={{ width: '15%' }}>Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -234,28 +260,15 @@ export default function Material() {
 
                       </TableCell>
                       <TableCell sx={tableBodyStyle} > {row.name} </TableCell>
-                
-                      <TableCell sx={tableBodyStyle} onClick={() => setExpanded(`panel${row.id}`)}>
-                  
 
-                        {expanded === `panel${row.id}` ?
-                          <Box sx={showText}>
-                            {row.location.map((option) => (
-                              <div key={row.id + '-session-' + option} style={{display: 'flex', justifyContent: 'center'}}>
-                                {option} {getPrice(row.cost, option, row.qty)} <ExpandMoreIcon sx={{fontSize: '25px', marginLeft: '10px', opacity: 0}} />
-                              </div>
-                            ))}
-                          </Box>
-                          :
-                          <Box sx={hideText}>
-                            {row.location.map((option) => (
-                              <div key={row.id + '-session-' + option} style={{display: 'flex', justifyContent: 'center'}}>
-                                {option} {getPrice(row.cost, option, row.qty)} <ExpandMoreIcon sx={{fontSize: '25px', marginLeft: '10px', opacity: row.location.length > 1 ? 1 : 0}} />
-                              </div>
-                            ))}
-                          
-                          </Box>
-                        }
+                      <TableCell sx={tableBodyStyleLoc} onClick={() => setExpanded(`panel${row.id}`)}>
+                        <Box sx={showText}>
+                          {row.location.map((option) => (
+                            <div key={row.id + '-session-' + option} style={{ display: 'flex', justifyContent: 'center' }}>
+                              {option} {getPrice(row.cost, option, row.qty)} <ExpandMoreIcon sx={{ fontSize: '25px', marginLeft: '10px', opacity: 0 }} />
+                            </div>
+                          ))}
+                        </Box>
                       </TableCell>
 
                       <TableCell>
@@ -279,10 +292,18 @@ export default function Material() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Box sx={{ padding: '1em 0', display: 'flex', justifyContent: 'end' }}>
+              <BtnClear onClick={() => setcheckList(initValue)} variant="contained">Clears All</BtnClear>
+            </Box>
           </Grid>
 
         </Grid>
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Material Added to List
+        </Alert>
+      </Snackbar>
 
     </Box>
   );

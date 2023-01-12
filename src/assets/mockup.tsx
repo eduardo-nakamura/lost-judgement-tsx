@@ -161,7 +161,7 @@ export const materialList = [
     {id: 123, name: "Lily", cost: [{value:2650, type: "¥"}],location: ["Flowers 2 Go"] },
     {id: 124, name: "Daikon", cost: [{value:158, type: "¥"}],location: ["Hero's Harvest"] },
     {id: 125, name: "Tomato", cost: [{value:94, type: "¥"}],location: ["Hero's Harvest"] },
-    {id: 126, name: "Hot Pepper", cost: [{value:0, type: "-"}],location: ["	For some reason, this is the only one that can only be found on the ground."] },
+    {id: 126, name: "Hot Pepper", cost: [{value:0, type: "-"}],location: ["Found on the ground"] },
     {id: 127, name: "Potato", cost: [{value:322, type: "¥"}],location: ["Hero's Harvest"] },
     {id: 128, name: "Onion", cost: [{value:72, type: "¥"}],location: ["Hero's Harvest"] },
     {id: 129, name: "Garlic", cost: [{value:598, type: "¥"}],location: ["Hero's Harvest"] },
